@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #e0f7fa;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .weather {
+      margin-top: 20px;
+    }
+
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Weather App</h2>
+    <input type="text" id="cityInput" placeholder="Enter city name" />
+    <button id="getWeatherBtn">Get Weather</button>
+    <div class="weather" id="weatherDisplay"></div>
+    <div class="error" id="errorDisplay"></div>
+  </div>
+
+  <script>
+    const apiKey = 'YOUR_API_KEY'; // Replace with your OpenWeatherMap API key
+    const cityInput = document.getElementById('cityInput');
+    const getWeatherBtn = document.getElementById('getWeatherBtn');
+    const weatherDisplay = document.getElementById('weatherDisplay');
+    const errorDisplay = document.getElementById('errorDisplay');
+
+    async function fetchWeather(city) {
+      try {
+        const response = await fetch(
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`
+        );
+        if (!response.ok) {
+          throw new Error('City not found');
+        }
+        const data = await response.json();
+        displayWeather(data);
+        localStorage.setItem('lastCity', city);
+        errorDisplay.textContent = '';
+      } catch (error) {
+        weatherDisplay.innerHTML = '';
+        errorDisplay.textContent = error.message;
+      }
+    }
+
+    function displayWeather(data) {
+      const { name, main, weather } = data;
+      weatherDisplay.innerHTML = `
+        <h3>${name}</h3>
+        <p>Temperature: ${main.temp}°C</p>
+        <p>Condition: ${weather[0].description}</p>
+      `;
+    }
+
+    getWeatherBtn.addEventListener('click', () => {
+      const city = cityInput.value.trim();
+      if (city) {
+        fetchWeather(city);
+      } else {
+        errorDisplay.textContent = 'Please enter a city name.';
+      }
+    });
+
+    window.addEventListener('load', () => {
+      const lastCity = localStorage.getItem('lastCity');
+      if (lastCity) {
+        cityInput.value = lastCity;
+        fetchWeather(lastCity);
+      }
+    });
+  </script>
+
+</body>
+</html>

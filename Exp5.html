@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+
+    form {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 2px solid #ccc;
+      border-radius: 4px;
+      transition: border-color 0.3s;
+    }
+
+    .error {
+      color: red;
+      font-size: 0.9em;
+    }
+
+    .success {
+      color: green;
+      font-size: 1em;
+      text-align: center;
+      margin-top: 15px;
+    }
+
+    input.valid {
+      border-color: green;
+    }
+
+    input.invalid {
+      border-color: red;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 1em;
+    }
+  </style>
+</head>
+<body>
+
+  <form id="registrationForm" novalidate>
+    <h2>Register</h2>
+
+    <label for="fullName">Full Name</label>
+    <input type="text" id="fullName" required />
+    <div class="error" id="nameError"></div>
+
+    <label for="email">Email</label>
+    <input type="email" id="email" required />
+    <div class="error" id="emailError"></div>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" required />
+    <div class="error" id="passwordError"></div>
+
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" pattern="[0-9]{10}" required />
+    <div class="error" id="phoneError"></div>
+
+    <button type="submit">Submit</button>
+    <div class="success" id="successMessage"></div>
+  </form>
+
+  <script>
+    const form = document.getElementById('registrationForm');
+    const fullName = document.getElementById('fullName');
+    const email = document.getElementById('email');
+    const password = document.getElementById('password');
+    const phone = document.getElementById('phone');
+
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+    const phoneError = document.getElementById('phoneError');
+    const successMessage = document.getElementById('successMessage');
+
+    function validateName() {
+      if (fullName.value.trim() === '') {
+        nameError.textContent = 'Full name is required.';
+        fullName.classList.add('invalid');
+        fullName.classList.remove('valid');
+        return false;
+      } else {
+        nameError.textContent = '';
+        fullName.classList.add('valid');
+        fullName.classList.remove('invalid');
+        return true;
+      }
+    }
+
+    function validateEmail() {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!regex.test(email.value)) {
+        emailError.textContent = 'Enter a valid email address.';
+        email.classList.add('invalid');
+        email.classList.remove('valid');
+        return false;
+      } else {
+        emailError.textContent = '';
+        email.classList.add('valid');
+        email.classList.remove('invalid');
+        return true;
+      }
+    }
+
+    function validatePassword() {
+      const regex = /^(?=.*[!@#$%^&*])(?=.{6,})/;
+      if (!regex.test(password.value)) {
+        passwordError.textContent = 'Password must be at least 6 characters and include a special character.';
+        password.classList.add('invalid');
+        password.classList.remove('valid');
+        return false;
+      } else {
+        passwordError.textContent = '';
+        password.classList.add('valid');
+        password.classList.remove('invalid');
+        return true;
+      }
+    }
+
+    function validatePhone() {
+      const regex = /^[0-9]{10}$/;
+      if (!regex.test(phone.value)) {
+        phoneError.textContent = 'Enter a valid 10-digit phone number.';
+        phone.classList.add('invalid');
+        phone.classList.remove('valid');
+        return false;
+      } else {
+        phoneError.textContent = '';
+        phone.classList.add('valid');
+        phone.classList.remove('invalid');
+        return true;
+      }
+    }
+
+    fullName.addEventListener('input', validateName);
+    email.addEventListener('input', validateEmail);
+    password.addEventListener('input', validatePassword);
+    phone.addEventListener('input', validatePhone);
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const isNameValid = validateName();
+      const isEmailValid = validateEmail();
+      const isPasswordValid = validatePassword();
+      const isPhoneValid = validatePhone();
+
+      if (isNameValid && isEmailValid && isPasswordValid && isPhoneValid) {
+        successMessage.textContent = 'Registration successful!';
+        form.reset();
+        document.querySelectorAll('input').forEach(input => input.classList.remove('valid'));
+      } else {
+        successMessage.textContent = '';
+      }
+    });
+  </script>
+
+</body>
+</html>

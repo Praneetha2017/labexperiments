@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sweet Crumbs Bakery</title>
+  <style>
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff8f0;
+      padding-top: 60px; /* space for fixed nav */
+    }
+
+    /* Fixed Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: #ff6f61;
+      color: white;
+      padding: 15px 20px;
+      text-align: center;
+      z-index: 1000;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 20px 20px;
+      background-color: #fff0e6;
+    }
+
+    header h1 {
+      font-size: 2.5em;
+      color: #d35400;
+    }
+
+    /* Slideshow */
+    .slideshow {
+      position: relative;
+      width: 90%;
+      max-width: 800px;
+      margin: 30px auto;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .slides {
+      display: flex;
+      width: 300%;
+      animation: slide 9s infinite;
+    }
+
+    .slides img {
+      width: 100%;
+      height: auto;
+    }
+
+    @keyframes slide {
+      0% { transform: translateX(0%); }
+      33% { transform: translateX(-100%); }
+      66% { transform: translateX(-200%); }
+      100% { transform: translateX(0%); }
+    }
+
+    section {
+      padding: 20px;
+      text-align: center;
+    }
+
+    section h2 {
+      color: #e67e22;
+      margin-bottom: 10px;
+    }
+
+    section p {
+      font-size: 1.1em;
+      color: #555;
+    }
+
+    footer {
+      background-color: #ff6f61;
+      color: white;
+      text-align: center;
+      padding: 15px;
+      margin-top: 40px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 1.8em;
+      }
+
+      nav {
+        padding: 10px;
+      }
+
+      nav a {
+        display: block;
+        margin: 8px 0;
+      }
+
+      .slides {
+        animation: slideMobile 9s infinite;
+      }
+
+      @keyframes slideMobile {
+        0% { transform: translateX(0%); }
+        33% { transform: translateX(-100%); }
+        66% { transform: translateX(-200%); }
+        100% { transform: translateX(0%); }
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="#">Home</a>
+    <a href="#">Menu</a>
+    <a href="#">About</a>
+    <a href="#">Contact</a>
+  </nav>
+
+  <header>
+    <h1>Sweet Crumbs Bakery</h1>
+    <p>Freshly baked happiness, every day!</p>
+  </header>
+
+  <div class="slideshow">
+    <div class="slides">
+      <img src="https://via.placeholder.com/800x400?text=Chocolate+Cake" alt="Chocolate Cake" />
+      <img src="https://via.placeholder.com/800x400?text=Strawberry+Tart" alt="Strawberry Tart" />
+      <img src="https://via.placeholder.com/800x400?text=Blueberry+Muffin" alt="Blueberry Muffin" />
+    </div>
+  </div>
+
+  <section>
+    <h2>Why You'll Love Us</h2>
+    <p>We use organic ingredients, bake with love, and deliver smiles with every bite.</p>
+  </section>
+
+  <footer>
+    &copy; 2025 Sweet Crumbs Bakery | Designed with ❤️
+  </footer>
+
+</body>
+</html>
